@@ -115,7 +115,7 @@
     <Bscmake />
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\curl"
-xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
       <Message>Install Headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -142,7 +142,7 @@ xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Co
     <Bscmake />
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\curl"
-xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
       <Message>Install Headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -173,7 +173,7 @@ xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Co
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\curl"
-xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
       <Message>Install Headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -203,7 +203,7 @@ xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Co
     </Bscmake>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\curl"
-xcopy /Y /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\include\curl\*.h" "$(SolutionDir)include\curl\"</Command>
       <Message>Install Headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -23,6 +23,7 @@
     <ProjectGuid>{EC99198F-4CDD-4D85-AE6F-F837FF6CC372}</ProjectGuid>
     <RootNamespace>CFLiteLib</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -93,8 +94,6 @@
     <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</PreBuildEventUseInBuild>
     <PreLinkEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreLinkEventUseInBuild>
     <PreLinkEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</PreLinkEventUseInBuild>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_$(Configuration)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)_$(Configuration)</TargetName>
     <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</PreBuildEventUseInBuild>
     <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PreBuildEventUseInBuild>
   </PropertyGroup>
@@ -103,14 +102,14 @@
       <Command>mkdir "$(SolutionDir)include\CoreFoundation"
 mkdir "$(SolutionDir)include\CoreFoundation\GNUCompatibility\"
 
-xcopy /Y /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
-xcopy /Y /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
-xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)Build\include\CoreFoundation\"
+xcopy /Y /D /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
 </Command>
       <Message>Prepare includes folder</Message>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(ProjectDir);$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Build\include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__i386__;DEBUG;WIN32_LEAN_AND_MEAN;CFLITELIB_EXPORTS;DEPLOYMENT_TARGET_WINDOWS;__STDC_LIMIT_MACROS;CF_BUILDING_CF;_WIN32_WINNT=0x0500;WINVER=0x0500;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreLinkEvent>
@@ -133,7 +132,17 @@ xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
     </Link>
     <Bscmake />
     <PostBuildEvent>
-      <Command>del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
+      <Command>mkdir "$(OutputPath)CFlite.resources"
+
+xcopy /Y /D /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
+
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
+
+del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_BinaryTypes.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_Internal.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFCharacterSetPriv.h"
@@ -155,16 +164,8 @@ del /F "$(SolutionDir)include\CoreFoundation\CFUniCharPriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodeDecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodePrecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\ForFoundationOnly.h"
-
-mkdir "$(OutputPath)CFlite.resources"
-
-xcopy /Y /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
 </Command>
-      <Message>Clean up includes</Message>
+      <Message>Copy public headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -172,14 +173,14 @@ xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
       <Command>mkdir "$(SolutionDir)include\CoreFoundation"
 mkdir "$(SolutionDir)include\CoreFoundation\GNUCompatibility\"
 
-xcopy /Y /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
-xcopy /Y /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
-xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)Build\include\CoreFoundation\"
+xcopy /Y /D /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
 </Command>
       <Message>Prepare includes folder</Message>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(ProjectDir);$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Build\include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG;WIN32_LEAN_AND_MEAN;CFLITELIB_EXPORTS;DEPLOYMENT_TARGET_WINDOWS;__STDC_LIMIT_MACROS;CF_BUILDING_CF;_WIN32_WINNT=0x0500;WINVER=0x0500;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreLinkEvent>
@@ -202,7 +203,17 @@ xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
     </Link>
     <Bscmake />
     <PostBuildEvent>
-      <Command>del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
+      <Command>mkdir "$(OutputPath)CFlite.resources"
+
+xcopy /Y /D /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
+
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
+
+del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_BinaryTypes.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_Internal.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFCharacterSetPriv.h"
@@ -224,16 +235,8 @@ del /F "$(SolutionDir)include\CoreFoundation\CFUniCharPriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodeDecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodePrecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\ForFoundationOnly.h"
-
-mkdir "$(OutputPath)CFlite.resources"
-
-xcopy /Y /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
 </Command>
-      <Message>Clean up includes</Message>
+      <Message>Copy public headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -242,13 +245,13 @@ xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
       <Command>mkdir "$(SolutionDir)include\CoreFoundation"
 mkdir "$(SolutionDir)include\CoreFoundation\GNUCompatibility\"
 
-xcopy /Y /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
-xcopy /Y /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
-xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)Build\include\CoreFoundation\"
+xcopy /Y /D /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(ProjectDir)..;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;$(SolutionDir)include\unicode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Build\include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>__i386__;WIN32_LEAN_AND_MEAN;CFLITELIB_EXPORTS;DEPLOYMENT_TARGET_WINDOWS;__STDC_LIMIT_MACROS;CF_BUILDING_CF;_WIN32_WINNT=0x0500;WINVER=0x0500;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;U_DISABLE_RENAMING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <OpenMPSupport>false</OpenMPSupport>
     </ClCompile>
@@ -266,13 +269,22 @@ xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
       </EnableCOMDATFolding>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
     <Bscmake />
     <PostBuildEvent>
-      <Command>del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
+      <Command>mkdir "$(OutputPath)CFlite.resources"
+
+xcopy /Y /D /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
+
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
+
+del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_BinaryTypes.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_Internal.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFCharacterSetPriv.h"
@@ -294,16 +306,8 @@ del /F "$(SolutionDir)include\CoreFoundation\CFUniCharPriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodeDecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodePrecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\ForFoundationOnly.h"
-
-mkdir "$(OutputPath)CFlite.resources"
-
-xcopy /Y /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
 </Command>
-      <Message>Clean up includes</Message>
+      <Message>Copy public headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -312,13 +316,13 @@ xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
       <Command>mkdir "$(SolutionDir)include\CoreFoundation"
 mkdir "$(SolutionDir)include\CoreFoundation\GNUCompatibility\"
 
-xcopy /Y /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
-xcopy /Y /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
-xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)Build\include\CoreFoundation\"
+xcopy /Y /D /R "$(ProjectDir)..\include\c99\*.h" "$(SolutionDir)include\"
+xcopy /Y /D /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
 </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(ProjectDir)..;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;$(SolutionDir)include\unicode;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Build\include;$(SolutionDir)include\CoreFoundation\GNUCompatibility;$(SolutionDir)include\unicode;$(SolutionDir)include\objc4;$(SolutionDir)include\pthreads;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;CFLITELIB_EXPORTS;DEPLOYMENT_TARGET_WINDOWS;__STDC_LIMIT_MACROS;CF_BUILDING_CF;_WIN32_WINNT=0x0500;WINVER=0x0500;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_DEPRECATE;U_DISABLE_RENAMING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreLinkEvent>
@@ -335,13 +339,22 @@ xcopy /Y /R "$(ProjectDir)..\include\*.h" "$(SolutionDir)include\"
       </EnableCOMDATFolding>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
     </Link>
     <Bscmake />
     <PostBuildEvent>
-      <Command>del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
+      <Command>mkdir "$(OutputPath)CFlite.resources"
+
+xcopy /Y /D /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
+xcopy /Y /D /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
+
+xcopy /Y /D /R "$(ProjectDir)..\*.h" "$(SolutionDir)include\CoreFoundation\"
+
+del /F "$(SolutionDir)include\CoreFoundation\CFBundlePriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_BinaryTypes.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFBundle_Internal.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFCharacterSetPriv.h"
@@ -363,16 +376,8 @@ del /F "$(SolutionDir)include\CoreFoundation\CFUniCharPriv.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodeDecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\CFUnicodePrecomposition.h"
 del /F "$(SolutionDir)include\CoreFoundation\ForFoundationOnly.h"
-
-mkdir "$(OutputPath)CFlite.resources"
-
-xcopy /Y /R "$(ProjectDir)..\CFCharacterSetBitmaps.bitmap" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUniCharPropertyDatabase.data" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-B.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\CFUnicodeData-L.mapping" "$(OutputPath)CFLite.resources\"
-xcopy /Y /R "$(ProjectDir)..\Info.plist" "$(OutputPath)CFLite.resources\"
 </Command>
-      <Message>Clean up includes</Message>
+      <Message>Copy public headers</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

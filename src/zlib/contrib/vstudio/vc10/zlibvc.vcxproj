@@ -26,11 +26,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140_xp</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -113,10 +113,10 @@
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
       <Message>Install headers</Message>
     </PostBuildEvent>
     <MASM>
@@ -158,10 +158,10 @@ xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Comma
     </Link>
     <PostBuildEvent>
       <Command>mkdir "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
       <Message>Install headers</Message>
     </PostBuildEvent>
     <MASM>
@@ -199,10 +199,10 @@ xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Comma
     <PostBuildEvent>
       <Message>Install headers</Message>
       <Command>mkdir "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -236,10 +236,10 @@ xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Comma
     <PostBuildEvent>
       <Message>Install headers</Message>
       <Command>mkdir "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
-xcopy /Y /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zconf.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zlib.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\zutil.h" "$(SolutionDir)include\zlib"
+xcopy /Y /D /R "$(ProjectDir)..\..\..\gzguts.h" "$(SolutionDir)include\zlib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -70,7 +70,7 @@ typedef __int64  intmax_t;
 typedef unsigned __int64   uintmax_t;
 
 /* 7.18.2  Limits of specified-width integer types */
-#if !defined ( __cplusplus) || defined (__STDC_LIMIT_MACROS)
+#if !defined ( __cplusplus) || defined (__STDC_LIMIT_MACROS) || defined (_MSC_VER)
 
 /* 7.18.2.1  Limits of exact-width integer types */
 #define INT8_MIN (-128) 
@@ -154,7 +154,7 @@ typedef unsigned __int64   uintmax_t;
 #define WINT_MIN 0
 #define WINT_MAX UINT32_MAX
 
-#endif /* !defined ( __cplusplus) || defined __STDC_LIMIT_MACROS */
+#endif /* !defined ( __cplusplus) || defined __STDC_LIMIT_MACROS || defined (_MSC_VER) */
 
 
 /* 7.18.4  Macros for integer constants */
